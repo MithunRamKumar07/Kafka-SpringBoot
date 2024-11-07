@@ -1,0 +1,10 @@
+Services : 
+
+1. Customer service, - Details about the customer
+2. Authentication service - Auth service. Confirm if this needs to be done at Gateway level.
+3. Timeline Service - Specific to an customer
+
+
+For 3000000 records,
+ - we need to increase the partitions. 
+ - Can you use the consumer group concept (Consumer Rebalancing)
