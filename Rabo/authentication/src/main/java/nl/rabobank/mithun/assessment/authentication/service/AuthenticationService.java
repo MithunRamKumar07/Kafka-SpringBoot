@@ -1,9 +1,11 @@
 package nl.rabobank.mithun.assessment.authentication.service;
 
 import lombok.extern.slf4j.Slf4j;
+import nl.rabobank.mithun.assessment.authentication.kafka.AuthorizationPublisher;
 import nl.rabobank.mithun.assessment.authentication.model.Customer;
 import nl.rabobank.mithun.assessment.authentication.model.Membership;
 import nl.rabobank.mithun.assessment.authentication.repository.AuthenticationRepository;
+import org.apache.logging.log4j.message.Message;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +15,9 @@ public class AuthenticationService {
 
     @Autowired
     AuthenticationRepository repository;
+
+    @Autowired
+    AuthorizationPublisher authorizationPublisher;
 
     public void updateMembershipData(Customer customer){
         Membership membership = getMembership(customer);
@@ -35,9 +40,11 @@ public class AuthenticationService {
         return membership;
     }
 
-    public void postMessageToTimeline(Customer customer) {
+    public void postMessageToTimeline(Message message) {
+        authorizationPublisher.publishEvent(message,"postMessageToTimeline");
     }
 
     public void publishAuthenticationFailureForCustomers(Customer customer) {
+        authorizationPublisher.publishEvent(customer,"unAuthorisedUser");
     }
 }

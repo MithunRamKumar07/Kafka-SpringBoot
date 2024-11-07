@@ -21,6 +21,7 @@ public class AuthenticationListener {
         log.info("Listening events from Customer Service");
         ObjectMapper objectMapper = new ObjectMapper();
         try {
+            // This check is an issue
             Customer customer = objectMapper.readValue(event,Customer.class);
             if(customer.getOperationType().equals("eligibilityCheck")){
                 log.info("Performing Eligibility Check");
