@@ -12,7 +12,6 @@ enum Status{
     INACTIVE
 }
 
-@Entity
 @Data
 @ToString
 public class Customer {

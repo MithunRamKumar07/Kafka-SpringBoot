@@ -1,14 +1,11 @@
 package nl.rabobank.mithun.assessment.authentication.model;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.*;
 import lombok.Data;
 
-import java.sql.Time;
 import java.sql.Timestamp;
 
+@Entity
 @Data
 public class Membership {
 

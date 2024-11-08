@@ -1,11 +1,9 @@
 package nl.rabobank.mithun.assessment.timeline.model;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.*;
 import lombok.Data;
 
+@Entity
 @Data
 public class Message {
     @Id
@@ -13,6 +11,6 @@ public class Message {
     @SequenceGenerator(name = "messageSeqGenerator", sequenceName = "message_sequence", allocationSize = 1)
     int messageId;
     String messageContent;
-    Timeline timeline;
+    int timelineId;
     String eventType;
 }

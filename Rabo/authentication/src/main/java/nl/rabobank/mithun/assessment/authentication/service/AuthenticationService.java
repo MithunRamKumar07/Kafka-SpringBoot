@@ -4,8 +4,8 @@ import lombok.extern.slf4j.Slf4j;
 import nl.rabobank.mithun.assessment.authentication.kafka.AuthorizationPublisher;
 import nl.rabobank.mithun.assessment.authentication.model.Customer;
 import nl.rabobank.mithun.assessment.authentication.model.Membership;
+import nl.rabobank.mithun.assessment.authentication.model.Timeline;
 import nl.rabobank.mithun.assessment.authentication.repository.AuthenticationRepository;
-import org.apache.logging.log4j.message.Message;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,20 +16,16 @@ public class AuthenticationService {
     @Autowired
     AuthenticationRepository repository;
 
-    @Autowired
-    AuthorizationPublisher authorizationPublisher;
-
     public void updateMembershipData(Customer customer){
+        log.info("Customer Object with Id {} is consumed from the Customer Service ",customer.getCustomerId());
         Membership membership = getMembership(customer);
         repository.save(membership);
-        log.info("Customer Object with Id {} is consumed from the Customer Service ",customer.getCustomerId());
+
     }
 
-    public String checkMembershipEligibility(Customer customer){
-        Membership membership = repository.getMemberDetailsByCustomerId(customer.getCustomerId());
-        // Need to decide whether we need to call the Timeline Service or the Customer Service
-        var result = String.valueOf(membership.getMembershipStatus());
-        return  result;
+    public boolean isMembershipActive(Timeline timeline){
+        Membership membership = repository.getMemberDetailsByCustomerId(timeline.getCustomerId()); //Index the customerId column
+        return String.valueOf(membership.getMembershipStatus()).equals("ACTIVE");
     }
 
     private static Membership getMembership(Customer customer) {
@@ -38,13 +34,5 @@ public class AuthenticationService {
         membership.setMembershipStatus(customer.getMembershipStatus());
         membership.setCreatedAt(customer.getCreatedAt());
         return membership;
-    }
-
-    public void postMessageToTimeline(Message message) {
-        authorizationPublisher.publishEvent(message,"postMessageToTimeline");
-    }
-
-    public void publishAuthenticationFailureForCustomers(Customer customer) {
-        authorizationPublisher.publishEvent(customer,"unAuthorisedUser");
     }
 }

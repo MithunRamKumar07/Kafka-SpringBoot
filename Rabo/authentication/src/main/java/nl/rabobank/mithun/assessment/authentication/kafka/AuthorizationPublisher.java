@@ -21,8 +21,8 @@ public class AuthorizationPublisher {
         this.customerKafkaTemplate = customerKafkaTemplate;
     }
 
-    public void publishEvent(Object inputObject,String eventType) {
-        CompletableFuture<SendResult<String, String>> future = customerKafkaTemplate.send("AUTH_FAILURE",getStringFromObject(inputObject));
+    public void publishEvent(Object inputObject,String eventType,String topic) {
+        CompletableFuture<SendResult<String, String>> future = customerKafkaTemplate.send(topic,getStringFromObject(inputObject));
         future.whenComplete((result,exception)->{
             if(exception!=null){
                 log.info("The {} event could not be published to the topic : {} . Exception Cause : {} " ,

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import nl.rabobank.mithun.assessment.timeline.model.Message;
+import nl.rabobank.mithun.assessment.timeline.model.MessageEvent;
 import nl.rabobank.mithun.assessment.timeline.service.TimelineService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -21,12 +22,21 @@ public class MessageListener {
 
         log.info("Listening events from Customer Service");
         ObjectMapper objectMapper = new ObjectMapper();
-            Message message = null;
+        MessageEvent messageEvent = null;
             try {
-                message = objectMapper.readValue(event, Message.class);
-                timelineService.saveMessage(message);
+                messageEvent = objectMapper.readValue(event, MessageEvent.class);
+                timelineService.saveMessage(getMessage(messageEvent));
+                timelineService.saveTimelineData(messageEvent.getTimeline());
             } catch (JsonProcessingException e) {
                 throw new RuntimeException(e);
             }
+    }
+
+    private static Message getMessage(MessageEvent messageEvent) {
+        Message message = new Message();
+        message.setMessageContent(messageEvent.getMessageContent());
+        message.setMessageId(messageEvent.getMessageId());
+        message.setTimelineId(messageEvent.getTimeline().getTimelineId());
+        return message;
     }
 }

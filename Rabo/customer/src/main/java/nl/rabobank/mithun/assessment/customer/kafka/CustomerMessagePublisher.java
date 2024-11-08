@@ -24,22 +24,22 @@ public class CustomerMessagePublisher {
     }
 
     public void publishCustomerDataToAuthService(Customer customer){
-        publishEvent(customer,"createOrUpdateCustomer");
+        publishEvent(customer,"createOrUpdateCustomer",CustomerConstants.CUSTOMER_TOPIC);
     }
 
     public void postMessage(Message message){
-        publishEvent(message,"postMessage");
+        publishEvent(message,"postMessage",CustomerConstants.MESSAGE_TOPIC);
     }
 
-    private void publishEvent(Object inputObject,String eventType) {
-        CompletableFuture<SendResult<String, String>> future = customerKafkaTemplate.send(CustomerConstants.CUSTOMER_TOPIC,getStringFromObject(inputObject));
+    private void publishEvent(Object inputObject,String eventType,String topic) {
+        CompletableFuture<SendResult<String, String>> future = customerKafkaTemplate.send(topic,getStringFromObject(inputObject));
         future.whenComplete((result,exception)->{
             if(exception!=null){
                 log.info("The {} event could not be published to the topic : {} . Exception Cause : {} " ,
-                        eventType, CustomerConstants.CUSTOMER_TOPIC, exception.getMessage());
+                        eventType, topic, exception.getMessage());
             }else{
-                log.info("The {} event with body {} is published to the offset : {} ",
-                        eventType,result.getProducerRecord().toString(),result.getRecordMetadata().offset());
+                log.info("The {} event with body {} is published towards the topic {} to the offset : {} ",
+                        eventType,result.getProducerRecord().toString(),topic,result.getRecordMetadata().offset());
             }
         });
     }
