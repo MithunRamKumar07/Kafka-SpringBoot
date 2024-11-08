@@ -2,8 +2,8 @@ package nl.rabobank.mithun.assessment.customer.service;
 
 import nl.rabobank.mithun.assessment.customer.kafka.CustomerMessagePublisher;
 import nl.rabobank.mithun.assessment.customer.model.Customer;
-import nl.rabobank.mithun.assessment.customer.model.Message;
 import nl.rabobank.mithun.assessment.customer.repository.CustomerRepository;
+import nl.rabobank.mithun.assessment.customer.util.CustomerConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,34 +25,27 @@ public class CustomerService {
         customer.setEventType("createCustomer");
         customerRepository.save(customer);
         //publish an event to the Authentication Service
-        customerPublisher.publishCustomerDataToAuthService(customer);
+        customerPublisher.publishCustomerDataToAuthService(customer,"createCustomer", CustomerConstants.CUSTOMER_TOPIC);
     }
 
     public Customer getCustomer(int customerId){
-        return customerRepository.getById(customerId);
+        return customerRepository.getReferenceById(customerId);
     }
     public List<Customer> getAllCustomers(){
         return customerRepository.findAll();
     }
 
-    public void updateCustomer( Customer customer){
-        customer.setCreatedAt(Timestamp.valueOf(java.time.LocalDateTime.now()));
-        customer.setEventType("updateMembershipStatus");
-        customerRepository.save(customer);
+    public void updateCustomer(Customer customer){
+        Customer entityToBeUpdated = customerRepository.getReferenceById(customer.getCustomerId());
+        entityToBeUpdated.setMembershipStatus(customer.getMembershipStatus());
+        entityToBeUpdated.setCreatedAt(Timestamp.valueOf(java.time.LocalDateTime.now()));
+        entityToBeUpdated.setEventType("updateMembershipStatus");
+        customerRepository.save(entityToBeUpdated);
+        customerPublisher.publishCustomerDataToAuthService(entityToBeUpdated,"updateCustomer", CustomerConstants.CUSTOMER_TOPIC);
     }
 
     public void deleteCustomer(int customerId){
         customerRepository.deleteById(customerId);
     }
 
-    public void publishCustomerDataToAuthService(Customer customer) {
-        //Event 1- Send the message to Authentication Service to check eligibility
-        customerPublisher.publishCustomerDataToAuthService(customer);
-        // Event 2 - Send event to Timeline service to add the message.
-        //Also write logic to receive the status from the Authentication service
-    }
-
-    public void postMessage(Message message){
-        customerPublisher.postMessage(message);
-    }
 }

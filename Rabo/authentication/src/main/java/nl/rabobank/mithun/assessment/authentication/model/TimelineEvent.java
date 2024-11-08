@@ -1,11 +1,13 @@
 package nl.rabobank.mithun.assessment.authentication.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
 import lombok.Data;
 
 @Data
-public class Timeline {
+public class TimelineEvent {
     int timelineId;
     int customerId;
+    String messageContent;
+    String eventType;
+    boolean isMembershipActive;
+
 }

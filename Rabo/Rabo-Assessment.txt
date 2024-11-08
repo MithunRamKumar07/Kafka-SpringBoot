@@ -1,8 +1,8 @@
 Services : 
 
-1. Customer service, - Details about the customer
+1. Customer service, - Details about the customerEvent
 2. Authentication service - Auth service. Confirm if this needs to be done at Gateway level.
-3. Timeline Service - Specific to an customer
+3. Timeline Service - Specific to an customerEvent
 
 
 For 3000000 records,

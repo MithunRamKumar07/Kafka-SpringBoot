@@ -14,6 +14,7 @@ public class Membership {
     @SequenceGenerator(name = "membershipSeqGenerator", sequenceName = "membership_sequence", allocationSize = 1)
     int membershipId;
     int customerId;
-    Timestamp createdAt; // Confirm the data type
+    Timestamp createdAt;
+    @Enumerated(EnumType.STRING)
     Status membershipStatus;
 }

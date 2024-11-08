@@ -1,7 +1,6 @@
 package nl.rabobank.mithun.assessment.timeline.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Data;
 
 @Data

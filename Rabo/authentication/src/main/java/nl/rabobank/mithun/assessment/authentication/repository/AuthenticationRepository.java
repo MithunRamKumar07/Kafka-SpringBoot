@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface AuthenticationRepository extends JpaRepository<Membership,Integer> {
 
-    @Query("SELECT * FROM Membership WHERE customerId = ?")
+    @Query(value = "SELECT * FROM Membership WHERE CUSTOMER_ID = :customerId",nativeQuery = true)
     Membership getMemberDetailsByCustomerId(int customerId);
 }

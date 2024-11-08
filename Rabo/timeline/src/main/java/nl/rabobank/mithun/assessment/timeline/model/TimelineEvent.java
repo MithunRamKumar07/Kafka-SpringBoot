@@ -3,9 +3,11 @@ package nl.rabobank.mithun.assessment.timeline.model;
 import lombok.Data;
 
 @Data
-public class MessageEvent {
-    int messageId;
+public class TimelineEvent {
+    int timelineId;
+    int customerId;
     String messageContent;
-    Timeline timeline;
     String eventType;
+    boolean isMembershipActive;
+
 }

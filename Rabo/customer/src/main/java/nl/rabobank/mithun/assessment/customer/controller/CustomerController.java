@@ -2,7 +2,6 @@ package nl.rabobank.mithun.assessment.customer.controller;
 
 import nl.rabobank.mithun.assessment.customer.service.CustomerService;
 import nl.rabobank.mithun.assessment.customer.model.Customer;
-import nl.rabobank.mithun.assessment.customer.model.Message;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -37,11 +36,5 @@ public class CustomerController {
     @DeleteMapping(value="/delete")
     public void deleteCustomer(int customerId){
         customerService.deleteCustomer(customerId);
-    }
-
-    @PostMapping(value="/postMessage")
-    public void addMessages(@RequestBody Message message){
-        message.setEventType("postMessage");
-        customerService.postMessage(message);
     }
 }

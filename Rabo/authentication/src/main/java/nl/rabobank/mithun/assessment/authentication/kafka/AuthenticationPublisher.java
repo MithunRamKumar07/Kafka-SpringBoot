@@ -12,21 +12,21 @@ import java.util.concurrent.CompletableFuture;
 
 @Slf4j
 @Service
-public class AuthorizationPublisher {
+public class AuthenticationPublisher {
 
     private final KafkaTemplate<String, String> customerKafkaTemplate;
 
     @Autowired
-    public AuthorizationPublisher(KafkaTemplate<String, String> customerKafkaTemplate) {
+    public AuthenticationPublisher(KafkaTemplate<String, String> customerKafkaTemplate) {
         this.customerKafkaTemplate = customerKafkaTemplate;
     }
 
-    public void publishEvent(Object inputObject,String eventType,String topic) {
+    public void publishEventToTimelineService(Object inputObject, String eventType, String topic) {
         CompletableFuture<SendResult<String, String>> future = customerKafkaTemplate.send(topic,getStringFromObject(inputObject));
         future.whenComplete((result,exception)->{
             if(exception!=null){
                 log.info("The {} event could not be published to the topic : {} . Exception Cause : {} " ,
-                        eventType, "AUTH_FAILURE", exception.getMessage());
+                        eventType, topic, exception.getMessage());
             }else{
                 log.info("The {} event with body {} is published to the offset : {} ",
                         eventType,result.getProducerRecord().toString(),result.getRecordMetadata().offset());
@@ -36,13 +36,13 @@ public class AuthorizationPublisher {
 
     private static String getStringFromObject(Object object) {
         ObjectMapper objectMapper = new ObjectMapper();
-        String jsonMessage;
+        String eventAsString;
         try {
-            jsonMessage = objectMapper.writeValueAsString(object);
-            log.info("Message to be published : {}" , jsonMessage);
+            eventAsString = objectMapper.writeValueAsString(object);
+            log.info("Message to be published : {}" , eventAsString);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
-        return jsonMessage;
+        return eventAsString;
     }
 }

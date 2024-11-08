@@ -1,9 +1,6 @@
 package nl.rabobank.mithun.assessment.authentication.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
 import lombok.Data;
-import lombok.ToString;
 
 import java.sql.Timestamp;
 
@@ -13,11 +10,10 @@ enum Status{
 }
 
 @Data
-@ToString
-public class Customer {
+public class CustomerEvent {
     int customerId;
-    String userName;
+    String customerName;
     Timestamp createdAt;
     Status membershipStatus;
-    String operationType;
+    String eventType;
 }

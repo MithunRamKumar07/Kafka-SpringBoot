@@ -1,10 +1,10 @@
 package nl.rabobank.mithun.assessment.authentication.service;
 
 import lombok.extern.slf4j.Slf4j;
-import nl.rabobank.mithun.assessment.authentication.kafka.AuthorizationPublisher;
-import nl.rabobank.mithun.assessment.authentication.model.Customer;
+import nl.rabobank.mithun.assessment.authentication.kafka.AuthenticationPublisher;
+import nl.rabobank.mithun.assessment.authentication.model.CustomerEvent;
 import nl.rabobank.mithun.assessment.authentication.model.Membership;
-import nl.rabobank.mithun.assessment.authentication.model.Timeline;
+import nl.rabobank.mithun.assessment.authentication.model.TimelineEvent;
 import nl.rabobank.mithun.assessment.authentication.repository.AuthenticationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,23 +16,32 @@ public class AuthenticationService {
     @Autowired
     AuthenticationRepository repository;
 
-    public void updateMembershipData(Customer customer){
-        log.info("Customer Object with Id {} is consumed from the Customer Service ",customer.getCustomerId());
-        Membership membership = getMembership(customer);
-        repository.save(membership);
+    @Autowired
+    AuthenticationPublisher publisher;
+
+    public void updateMembershipData(CustomerEvent customerEvent){
+        log.info("Customer Object with Id {} is consumed from the Customer Service ", customerEvent.getCustomerId());
+        if(customerEvent.getEventType().equals("createCustomer")){
+            repository.save(createMembership(customerEvent));
+        }else{
+            Membership membership = repository.getMemberDetailsByCustomerId(customerEvent.getCustomerId());
+            membership.setMembershipStatus(customerEvent.getMembershipStatus());
+            repository.save(membership);
+        }
+
 
     }
 
-    public boolean isMembershipActive(Timeline timeline){
-        Membership membership = repository.getMemberDetailsByCustomerId(timeline.getCustomerId()); //Index the customerId column
+    public boolean isMembershipActive(TimelineEvent timelineEvent){
+        Membership membership = repository.getMemberDetailsByCustomerId(timelineEvent.getCustomerId()); //Index the customerId column
         return String.valueOf(membership.getMembershipStatus()).equals("ACTIVE");
-    }
+        }
 
-    private static Membership getMembership(Customer customer) {
+    private static Membership createMembership(CustomerEvent customerEvent) {
         Membership membership = new Membership();
-        membership.setCustomerId(customer.getCustomerId());
-        membership.setMembershipStatus(customer.getMembershipStatus());
-        membership.setCreatedAt(customer.getCreatedAt());
+        membership.setCustomerId(customerEvent.getCustomerId());
+        membership.setMembershipStatus(customerEvent.getMembershipStatus());
+        membership.setCreatedAt(customerEvent.getCreatedAt());
         return membership;
     }
 }

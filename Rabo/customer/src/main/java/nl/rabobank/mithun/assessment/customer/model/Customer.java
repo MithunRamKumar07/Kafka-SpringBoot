@@ -1,5 +1,6 @@
 package nl.rabobank.mithun.assessment.customer.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.ToString;
@@ -14,16 +15,16 @@ enum Status{
 @Entity
 @Data
 @ToString
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Customer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "customerSeqGenerator")
     @SequenceGenerator(name = "customerSeqGenerator", sequenceName = "customer_sequence", allocationSize = 1)
     int customerId;
-    String userName;
+    String customerName;
     Timestamp createdAt;
+    @Enumerated(EnumType.STRING)
     Status membershipStatus;
     String eventType;
-
-
 }

@@ -10,6 +10,6 @@ public class CustomerListener {
 
     @KafkaListener(topics = "AUTH_FAILURE_TOPIC",groupId = "customer-group")
     public void listenToAuthFailureEvents(String errorEvent){
-        log.error("Authentication Failure for user. Error Details : {}" , errorEvent);
+        log.error("Authentication Failure for user. Error Details : {}" , errorEvent );
     }
 }

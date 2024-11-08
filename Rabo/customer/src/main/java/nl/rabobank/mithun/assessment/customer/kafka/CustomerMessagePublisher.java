@@ -4,7 +4,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import nl.rabobank.mithun.assessment.customer.model.Customer;
-import nl.rabobank.mithun.assessment.customer.model.Message;
 import nl.rabobank.mithun.assessment.customer.util.CustomerConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -23,15 +22,8 @@ public class CustomerMessagePublisher {
         this.customerKafkaTemplate = customerKafkaTemplate;
     }
 
-    public void publishCustomerDataToAuthService(Customer customer){
-        publishEvent(customer,"createOrUpdateCustomer",CustomerConstants.CUSTOMER_TOPIC);
-    }
 
-    public void postMessage(Message message){
-        publishEvent(message,"postMessage",CustomerConstants.MESSAGE_TOPIC);
-    }
-
-    private void publishEvent(Object inputObject,String eventType,String topic) {
+    public void publishCustomerDataToAuthService(Object inputObject,String eventType,String topic) {
         CompletableFuture<SendResult<String, String>> future = customerKafkaTemplate.send(topic,getStringFromObject(inputObject));
         future.whenComplete((result,exception)->{
             if(exception!=null){
