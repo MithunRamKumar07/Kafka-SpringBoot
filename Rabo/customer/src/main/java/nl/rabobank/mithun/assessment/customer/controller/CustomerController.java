@@ -33,8 +33,8 @@ public class CustomerController {
         customerService.updateCustomer(customer);
     }
 
-    @DeleteMapping(value="/delete")
-    public void deleteCustomer(int customerId){
+    @DeleteMapping(value="/delete/{customerId}")
+    public void deleteCustomer(@PathVariable int customerId){
         customerService.deleteCustomer(customerId);
     }
 }
