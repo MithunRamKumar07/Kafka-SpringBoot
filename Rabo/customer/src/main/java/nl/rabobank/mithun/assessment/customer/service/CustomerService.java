@@ -1,10 +1,11 @@
 package nl.rabobank.mithun.assessment.customer.service;
 
-import nl.rabobank.mithun.assessment.customer.kafka.CustomerMessagePublisher;
+import nl.rabobank.mithun.assessment.customer.exception.CustomerException;
+import nl.rabobank.mithun.assessment.customer.kafka.CustomerMessageProducer;
 import nl.rabobank.mithun.assessment.customer.model.Customer;
 import nl.rabobank.mithun.assessment.customer.repository.CustomerRepository;
-import nl.rabobank.mithun.assessment.customer.util.CustomerConstants;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
@@ -13,19 +14,25 @@ import java.util.List;
 @Service
 public class CustomerService {
 
+    public static final String CREATE_CUSTOMER = "createCustomer";
+    public static final String UPDATE_CUSTOMER = "updateCustomer";
     @Autowired
     CustomerRepository customerRepository;
 
     @Autowired
-    CustomerMessagePublisher customerPublisher;
+    CustomerMessageProducer customerPublisher;
+
+    @Value("${customer.topic}")
+    String customerTopic;
 
 
-    public void createCustomer(Customer customer){
+    public Customer createCustomer(Customer customer){
         customer.setCreatedAt(Timestamp.valueOf(java.time.LocalDateTime.now()));
-        customer.setEventType("createCustomer");
-        customerRepository.save(customer);
+        customer.setEventType(CREATE_CUSTOMER);
+        Customer response = customerRepository.save(customer);
         //publish an event to the Authentication Service
-        customerPublisher.publishCustomerDataToAuthService(customer,"createCustomer", CustomerConstants.CUSTOMER_TOPIC);
+        customerPublisher.publishCustomerDataToAuthService(customer, CREATE_CUSTOMER, customerTopic);
+        return response;
     }
 
     public Customer getCustomer(int customerId){
@@ -35,17 +42,20 @@ public class CustomerService {
         return customerRepository.findAll();
     }
 
-    public void updateCustomer(Customer customer){
+    public Customer updateCustomer(Customer customer){
         Customer entityToBeUpdated = customerRepository.getReferenceById(customer.getCustomerId());
+        if(entityToBeUpdated == null){
+            throw new CustomerException("The customer to be updated is not present. Please provide a valid customer Id");
+        }
         entityToBeUpdated.setMembershipStatus(customer.getMembershipStatus());
         entityToBeUpdated.setCreatedAt(Timestamp.valueOf(java.time.LocalDateTime.now()));
-        entityToBeUpdated.setEventType("updateMembershipStatus");
-        customerRepository.save(entityToBeUpdated);
-        customerPublisher.publishCustomerDataToAuthService(entityToBeUpdated,"updateCustomer", CustomerConstants.CUSTOMER_TOPIC);
+        entityToBeUpdated.setEventType(UPDATE_CUSTOMER);
+        Customer response = customerRepository.save(entityToBeUpdated);
+        customerPublisher.publishCustomerDataToAuthService(entityToBeUpdated, UPDATE_CUSTOMER, customerTopic);
+        return response;
     }
 
     public void deleteCustomer(int customerId){
         customerRepository.deleteById(customerId);
     }
-
 }

@@ -4,11 +4,6 @@ import lombok.Data;
 
 import java.sql.Timestamp;
 
-enum Status{
-    ACTIVE,
-    INACTIVE
-}
-
 @Data
 public class CustomerEvent {
     int customerId;

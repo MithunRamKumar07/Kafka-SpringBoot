@@ -1,7 +1,7 @@
 package nl.rabobank.mithun.assessment.timeline.service;
 
 import lombok.extern.slf4j.Slf4j;
-import nl.rabobank.mithun.assessment.timeline.controller.util.TimelineUtils;
+import nl.rabobank.mithun.assessment.timeline.util.TimelineUtils;
 import nl.rabobank.mithun.assessment.timeline.kafka.TimelineProducer;
 import nl.rabobank.mithun.assessment.timeline.model.Message;
 import nl.rabobank.mithun.assessment.timeline.model.Timeline;
@@ -9,6 +9,7 @@ import nl.rabobank.mithun.assessment.timeline.model.TimelineEvent;
 import nl.rabobank.mithun.assessment.timeline.repository.MessageRepository;
 import nl.rabobank.mithun.assessment.timeline.repository.TimelineRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 @Slf4j
@@ -22,6 +23,9 @@ public class TimelineService {
 
     @Autowired
     TimelineProducer timelineProducer;
+
+    @Value("${timeline.topic}")
+    String timelineTopic;
 
     public void saveMessage(Message message) {
         messageRepository.save(message);

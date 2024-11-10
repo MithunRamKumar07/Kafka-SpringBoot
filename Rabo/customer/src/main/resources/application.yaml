@@ -20,3 +20,5 @@ spring:
       group_id: customer-group
 server:
   port: 8085
+customer:
+  topic: CUSTOMER

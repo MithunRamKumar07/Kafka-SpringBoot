@@ -2,20 +2,19 @@ package nl.rabobank.mithun.assessment.customer.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.ToString;
 
 import java.sql.Timestamp;
 
-enum Status{
-    ACTIVE,
-    INACTIVE
-}
+
 
 @Entity
 @Data
 @ToString
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@AllArgsConstructor
 public class Customer {
 
     @Id

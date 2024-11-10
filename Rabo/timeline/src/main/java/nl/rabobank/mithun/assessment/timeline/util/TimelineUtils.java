@@ -1,8 +1,9 @@
-package nl.rabobank.mithun.assessment.timeline.controller.util;
+package nl.rabobank.mithun.assessment.timeline.util;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
+import nl.rabobank.mithun.assessment.timeline.exception.TimelineException;
 import nl.rabobank.mithun.assessment.timeline.model.TimelineEvent;
 
 @Slf4j
@@ -18,7 +19,7 @@ public class TimelineUtils {
             eventAsString = objectMapper.writeValueAsString(object);
             log.info("Message to be published : {}" , eventAsString);
         } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
+            throw new TimelineException("Exception while parsing the JSON");
         }
         return eventAsString;
     }
@@ -29,7 +30,7 @@ public class TimelineUtils {
         try {
             timelineEvent = objectMapper.readValue(event,TimelineEvent.class);
         } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
+            throw new TimelineException("Exception while parsing the JSON");
         }
         return timelineEvent;
     }

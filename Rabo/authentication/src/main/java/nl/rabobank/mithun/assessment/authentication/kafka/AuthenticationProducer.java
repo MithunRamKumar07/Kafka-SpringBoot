@@ -1,50 +1,49 @@
-package nl.rabobank.mithun.assessment.customer.kafka;
+package nl.rabobank.mithun.assessment.authentication.kafka;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
-import nl.rabobank.mithun.assessment.customer.model.Customer;
-import nl.rabobank.mithun.assessment.customer.util.CustomerConstants;
+import nl.rabobank.mithun.assessment.authentication.exception.AuthenticationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.support.SendResult;
 import org.springframework.stereotype.Service;
+
 import java.util.concurrent.CompletableFuture;
 
 @Slf4j
 @Service
-public class CustomerMessagePublisher {
+public class AuthenticationProducer {
 
-    private final KafkaTemplate<String, String>  customerKafkaTemplate;
+    private final KafkaTemplate<String, String> customerKafkaTemplate;
 
     @Autowired
-    public CustomerMessagePublisher(KafkaTemplate<String, String> customerKafkaTemplate) {
+    public AuthenticationProducer(KafkaTemplate<String, String> customerKafkaTemplate) {
         this.customerKafkaTemplate = customerKafkaTemplate;
     }
 
-
-    public void publishCustomerDataToAuthService(Object inputObject,String eventType,String topic) {
+    public void publishEventToTimelineService(Object inputObject, String eventType, String topic) {
         CompletableFuture<SendResult<String, String>> future = customerKafkaTemplate.send(topic,getStringFromObject(inputObject));
         future.whenComplete((result,exception)->{
             if(exception!=null){
                 log.info("The {} event could not be published to the topic : {} . Exception Cause : {} " ,
                         eventType, topic, exception.getMessage());
             }else{
-                log.info("The {} event with body {} is published towards the topic {} to the offset : {} ",
-                        eventType,result.getProducerRecord().toString(),topic,result.getRecordMetadata().offset());
+                log.info("The {} event with body {} is published to the offset : {} ",
+                        eventType,result.getProducerRecord().toString(),result.getRecordMetadata().offset());
             }
         });
     }
 
-    private static String getStringFromObject(Object object) {
+    private String getStringFromObject(Object object) {
         ObjectMapper objectMapper = new ObjectMapper();
-        String jsonMessage;
+        String eventAsString;
         try {
-            jsonMessage = objectMapper.writeValueAsString(object);
-            log.info("Message to be published : {}" , jsonMessage);
+            eventAsString = objectMapper.writeValueAsString(object);
+            log.info("Message to be published : {}" , eventAsString);
         } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
+            throw new AuthenticationException("Exception while parsing the JSON");
         }
-        return jsonMessage;
+        return eventAsString;
     }
 }

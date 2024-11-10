@@ -15,8 +15,8 @@ public class CustomerController {
     CustomerService customerService;
 
     @PostMapping
-    public void createCustomer(@RequestBody Customer customer){
-        customerService.createCustomer(customer);
+    public Customer createCustomer(@RequestBody Customer customer){
+        return customerService.createCustomer(customer);
     }
 
     @GetMapping(value = "/get/{customerId}")
@@ -29,8 +29,8 @@ public class CustomerController {
     }
 
     @PutMapping(value="/update")
-    public void updateCustomer(@RequestBody Customer customer){
-        customerService.updateCustomer(customer);
+    public Customer updateCustomer(@RequestBody Customer customer){
+        return customerService.updateCustomer(customer);
     }
 
     @DeleteMapping(value="/delete/{customerId}")
