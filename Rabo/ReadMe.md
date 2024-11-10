@@ -10,7 +10,7 @@ Web Application developed by Mithun for Rabo code assessment
 * ****
 
 ### Microservices Details
-* There are 3 Springboot apps namely 
+There are 3 Springboot apps namely 
 1. CustomerService
 2. AuthenticationService
 3. TimelineService
@@ -19,7 +19,7 @@ Web Application developed by Mithun for Rabo code assessment
 Please follow the below order of steps for a smooth setup.
 
 ### Building the apps
-* Use **mvn clean install** command from terminal of respective service
+Use **mvn clean install** command from terminal of respective service
 
 ### Booting the local Kafka instance
 * Apache kafka has been used to implement the event driven design
@@ -34,7 +34,7 @@ Please follow the below order of steps for a smooth setup.
 
 ### Database Details
 * H2 database has been used for all the services to store data. 
-* To access the DB, please follow the URL : localhost:servicePortNumber/h2-console
+* To access the DB console, please follow the URL : localhost:{{servicePortNumber}}/h2-console
 * ****
 ## App Testing
 ### Postman Collection
@@ -42,8 +42,8 @@ Attached the postman collection in the path root directory. Please import them l
 
 ### Automation Test Cases
 * The tests are intended to hit the rest endpoints and trigger an integration test. 
-* The execution of the test cases are done in local environment. Hence, all the three services need to be started before executing the test cases.
-* The configuration can be setup for the test scripts against the apps running on cloud environments
+* The execution of the test cases are done in local environment and can be later configured for cloud. Hence, all the three services need to be started before executing the test cases.
+* To run the test cases, please run the "TestRunner.java" class in Customer and Timeline modules.
 
 Below are the test case details : 
 * ****

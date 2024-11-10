@@ -1,0 +1,15 @@
+---
+applications:
+  - name: customer-service
+    path: <jar path>
+    buildpack: java_buildpack_offline // Built pack as per org standards.
+    disk_quota: 2048M
+    health-check-type: port
+    routes:
+      - route: <app-route>
+    services:
+      - <db_to_connect>
+      - <config-server>
+    env:
+      SPRING_PROFILES_ACTIVE: {profiles for the app}
+      JBP_CONFIG_OPEN_JDK_JRE: '{ jre: { version: 21.+ } }'
