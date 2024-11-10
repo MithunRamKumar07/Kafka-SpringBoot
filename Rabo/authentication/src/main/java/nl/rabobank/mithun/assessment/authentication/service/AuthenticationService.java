@@ -8,8 +8,7 @@ import nl.rabobank.mithun.assessment.authentication.model.TimelineEvent;
 import nl.rabobank.mithun.assessment.authentication.repository.AuthenticationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import javax.naming.AuthenticationException;
+import nl.rabobank.mithun.assessment.authentication.exception.AuthenticationException;
 
 @Slf4j
 @Service
@@ -22,19 +21,40 @@ public class AuthenticationService {
     AuthenticationProducer publisher;
 
     public void updateMembershipData(CustomerEvent customerEvent) throws AuthenticationException {
-        log.info("Customer Object with Id {} is consumed from the Customer Service ", customerEvent.getCustomerId());
-        if(customerEvent.getEventType().equals("createCustomer")){
-            repository.save(createMembership(customerEvent));
-        }else{
-            Membership membership = repository.getMemberDetailsByCustomerId(customerEvent.getCustomerId());
-            if(membership!=null){
-                membership.setMembershipStatus(customerEvent.getMembershipStatus());
-                repository.save(membership);
-            }else{
-                log.error("Membership is not found");
-                throw new AuthenticationException("Membership not found");
+        log.info("Updating Data for Customer with Id {} ", customerEvent.getCustomerId());
+        switch(customerEvent.getEventType()){
+            // Events for Crud Operations
+            case "createCustomer" -> {
+                repository.save(createMembership(customerEvent));
+                log.info("New membership created for customer with Id : {} ",customerEvent.getCustomerId());
             }
+            case "updateCustomer" -> {
+                Membership membership = getMemberDetailsByCustomerId(customerEvent);
+                if(membership!=null){
+                    membership.setMembershipStatus(customerEvent.getMembershipStatus());
+                    repository.save(membership);
+                }else {
+                    log.error("Membership is not found to update");
+                    throw new AuthenticationException("Membership not found");
+                }
+            }
+            case "deleteCustomer" -> {
+                Membership membership = getMemberDetailsByCustomerId(customerEvent);
+                if(membership != null){
+                    repository.delete(membership);
+                    log.info("Membership deleted for customer with Id : {} ",customerEvent.getCustomerId());
+                }
+                else {
+                    log.error("Membership is not found to delete");
+                    throw new AuthenticationException("Membership not found");
+                }
+            }
+            default -> log.info("Do Nothing.All scenarios are handled");
         }
+    }
+
+    private Membership getMemberDetailsByCustomerId(CustomerEvent customerEvent) {
+        return repository.getMemberDetailsByCustomerId(customerEvent.getCustomerId());
     }
 
     public boolean isMembershipActive(TimelineEvent timelineEvent){

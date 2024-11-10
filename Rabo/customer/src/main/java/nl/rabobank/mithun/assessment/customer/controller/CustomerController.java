@@ -3,6 +3,8 @@ package nl.rabobank.mithun.assessment.customer.controller;
 import nl.rabobank.mithun.assessment.customer.service.CustomerService;
 import nl.rabobank.mithun.assessment.customer.model.Customer;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,26 +17,37 @@ public class CustomerController {
     CustomerService customerService;
 
     @PostMapping
-    public Customer createCustomer(@RequestBody Customer customer){
-        return customerService.createCustomer(customer);
+    public ResponseEntity<Customer> createCustomer(@RequestBody Customer customer){
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(customerService.createCustomer(customer));
     }
 
     @GetMapping(value = "/get/{customerId}")
-    public Customer getCustomer(@PathVariable int customerId){
-        return customerService.getCustomer(customerId);
+    public ResponseEntity<Customer> getCustomer(@PathVariable int customerId){
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(customerService.getCustomer(customerId));
     }
     @GetMapping(value = "/get")
-    public List<Customer> getAllCustomers(){
-        return customerService.getAllCustomers();
+    public ResponseEntity<List<Customer>> getAllCustomers(){
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(customerService.getAllCustomers());
     }
 
     @PutMapping(value="/update")
-    public Customer updateCustomer(@RequestBody Customer customer){
-        return customerService.updateCustomer(customer);
+    public ResponseEntity<Customer> updateCustomer(@RequestBody Customer customer){
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(customerService.updateCustomer(customer));
     }
 
     @DeleteMapping(value="/delete/{customerId}")
-    public void deleteCustomer(@PathVariable int customerId){
+    public ResponseEntity<String> deleteCustomer(@PathVariable int customerId){
         customerService.deleteCustomer(customerId);
+        return ResponseEntity
+                .status(HttpStatus.NO_CONTENT)
+                .body("The user has been deleted");
     }
 }

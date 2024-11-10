@@ -1,18 +1,15 @@
 package nl.rabobank.mithun.assessment.authentication.service;
 
 import nl.rabobank.mithun.assessment.authentication.TestUtils;
-import nl.rabobank.mithun.assessment.authentication.model.CustomerEvent;
+import nl.rabobank.mithun.assessment.authentication.exception.AuthenticationException;
 import nl.rabobank.mithun.assessment.authentication.model.Membership;
 import nl.rabobank.mithun.assessment.authentication.model.Status;
-import nl.rabobank.mithun.assessment.authentication.model.TimelineEvent;
 import nl.rabobank.mithun.assessment.authentication.repository.AuthenticationRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-
-import javax.naming.AuthenticationException;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -35,7 +32,7 @@ public class AuthenticationServiceTest {
     Membership membership;
 
     @Test
-    void testCreateMembership() throws AuthenticationException {
+    void testCreateMembership() throws AuthenticationException, javax.naming.AuthenticationException {
         when(repository.save(any())).thenReturn(membership);
         authenticationService.updateMembershipData(TestUtils.getCustomerEvent("createCustomer"));
     }
@@ -71,6 +68,20 @@ public class AuthenticationServiceTest {
         assertFalse(authenticationService.isMembershipActive(TestUtils.getTimelineEvent()));
     }
 
+    @Test
+    void testDeleteMembershipEvent() throws AuthenticationException {
+        when(repository.getMemberDetailsByCustomerId(anyInt())).thenReturn(membership);
+        authenticationService.updateMembershipData(TestUtils.getCustomerEvent("deleteCustomer"));
+    }
 
+    @Test
+    void testDeleteMembershipForInvalidCustomer(){
+        when(repository.getMemberDetailsByCustomerId(anyInt())).thenReturn(null);
+        assertThrows(AuthenticationException.class,()->authenticationService.updateMembershipData(TestUtils.getCustomerEvent("deleteCustomer")));
+    }
 
+    @Test
+    void testDefaultCase(){
+        authenticationService.updateMembershipData(TestUtils.getCustomerEvent("default"));
+    }
 }

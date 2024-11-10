@@ -1,0 +1,176 @@
+{
+	"info": {
+		"_postman_id": "1a1ebf6a-4a9a-4823-bc43-d72f73cf6094",
+		"name": "Rabo-Assessment",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "8047554"
+	},
+	"item": [
+		{
+			"name": "CustomerCrudOperations",
+			"item": [
+				{
+					"name": "Create-Customer",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"// const moment = require('moment');",
+									"// pm.globals.set(\"today\", moment().format(\"MM/DD/YYYY\"));",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n   \"membershipStatus\": \"ACTIVE\",\n   \"customerName\":\"User1\"\n} ",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8085/customer",
+							"host": [
+								"localhost"
+							],
+							"port": "8085",
+							"path": [
+								"customer"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update-Customer-Status",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n   \"membershipStatus\": \"INACTIVE\",\n   \"customerId\":\"1\"\n} ",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8085/customer/update",
+							"host": [
+								"localhost"
+							],
+							"port": "8085",
+							"path": [
+								"customer",
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetAllCustomers",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8085/customer/get",
+							"host": [
+								"localhost"
+							],
+							"port": "8085",
+							"path": [
+								"customer",
+								"get"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetCustomerById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8085/customer/get/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8085",
+							"path": [
+								"customer",
+								"get",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteCustomerById",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8085/customer/delete/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8085",
+							"path": [
+								"customer",
+								"delete",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "PostMsgToTimeline",
+			"item": [
+				{
+					"name": "postMessage",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"messageContent\":\"Good morning. First Message to Timeline\",\n    \"customerId\": 2,\n    \"timelineId\": 1,\n    \"eventType\":\"postMessage\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8087/timeline/postMessage",
+							"host": [
+								"localhost"
+							],
+							"port": "8087",
+							"path": [
+								"timeline",
+								"postMessage"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

@@ -29,15 +29,13 @@ public class CustomerMessageProducerTest {
     @Mock
     KafkaTemplate<String,String> customerKafkaTemplate;
 
+    @Mock
+    Customer customer;
+
     @Test
     public void testPublish(){
         when(customerKafkaTemplate.send(any(),any())).thenReturn(future);
-        customerMessageProducer.publishCustomerDataToAuthService(getCustomer(),
+        customerMessageProducer.publishCustomerDataToAuthService(customer,
                 "createCustomer","CUSTOMER");
-    }
-
-    private Customer getCustomer(){
-        return new Customer(1,"user1",
-                Timestamp.valueOf(java.time.LocalDateTime.now()), Status.ACTIVE,"createCustomer");
     }
 }

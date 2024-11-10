@@ -32,10 +32,10 @@ public class AuthenticationConsumer {
     public void listenCustomerEvents(String event) throws AuthenticationException {
         log.info("Listening customer creation/update from Customer Service");
         try {
-            ObjectMapper objectMapper = new ObjectMapper();
-            CustomerEvent customerEvent = objectMapper.readValue(event, CustomerEvent.class);
-            log.info("Updating membership Data in DB");
-            authenticationService.updateMembershipData(customerEvent);
+                ObjectMapper objectMapper = new ObjectMapper();
+                CustomerEvent customerEvent = objectMapper.readValue(event, CustomerEvent.class);
+                log.info("Updating membership Data in DB");
+                authenticationService.updateMembershipData(customerEvent);
         } catch (JsonProcessingException e) {
             throw new AuthenticationException("Exception while parsing the JSON");
         }

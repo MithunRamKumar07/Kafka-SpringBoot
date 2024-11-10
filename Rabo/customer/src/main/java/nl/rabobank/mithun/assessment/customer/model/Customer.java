@@ -8,13 +8,10 @@ import lombok.ToString;
 
 import java.sql.Timestamp;
 
-
-
 @Entity
 @Data
 @ToString
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-@AllArgsConstructor
 public class Customer {
 
     @Id

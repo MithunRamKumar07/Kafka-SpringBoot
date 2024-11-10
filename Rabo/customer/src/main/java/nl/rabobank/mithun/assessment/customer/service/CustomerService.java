@@ -57,5 +57,14 @@ public class CustomerService {
 
     public void deleteCustomer(int customerId){
         customerRepository.deleteById(customerId);
+        // The membership related to the customer should be deleted
+        customerPublisher.publishCustomerDataToAuthService(getDeleteCustomerData(customerId), UPDATE_CUSTOMER, customerTopic);
+    }
+
+    private Customer getDeleteCustomerData(int customerId) {
+        Customer customerToBeDeleted = new Customer();
+        customerToBeDeleted.setCustomerId(customerId);
+        customerToBeDeleted.setEventType("deleteCustomer");
+        return customerToBeDeleted;
     }
 }

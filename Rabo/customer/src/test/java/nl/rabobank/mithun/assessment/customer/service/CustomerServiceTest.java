@@ -20,6 +20,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.when;
 
 /** <p> Test class for {@link CustomerService }</p>
@@ -51,20 +52,20 @@ public class CustomerServiceTest {
     @Test
     public void testCreateCustomer(){
         when(customerRepository.save(any())).thenReturn(customer);
-        assertNotNull(customerService.createCustomer(getCustomer("createCustomer")));
+        assertNotNull(customerService.createCustomer(customer));
     }
 
     @Test
     public void testUpdateCustomer (){
-        when(customerRepository.getReferenceById(1)).thenReturn(customer);
+        when(customerRepository.getReferenceById(anyInt())).thenReturn(customer);
         when(customerRepository.save(any())).thenReturn(customer);
-        assertNotNull(customerService.updateCustomer(getCustomer("updateCustomer")));
+        assertNotNull(customerService.updateCustomer(customer));
     }
 
 
     @Test
     public void testUpdateCustomerForException(){
-        assertThrows(CustomerException.class,()->customerService.updateCustomer(getCustomer("updateCustomer")));
+        assertThrows(CustomerException.class,()->customerService.updateCustomer(customer));
     }
 
     @Test
@@ -84,8 +85,4 @@ public class CustomerServiceTest {
        customerService.deleteCustomer(1);
     }
 
-    private Customer getCustomer(String eventType){
-        return new Customer(1,"user1",
-                Timestamp.valueOf(java.time.LocalDateTime.now()),Status.ACTIVE,eventType);
-    }
 }
