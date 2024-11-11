@@ -11,6 +11,9 @@ import org.springframework.stereotype.Service;
 import java.sql.Timestamp;
 import java.util.List;
 
+/**<p> Service that has all the business logic for the Customer service.
+ * Coordinates the flow of events between the controller, repository and Kafka Modules</p>
+ */
 @Service
 public class CustomerService {
 

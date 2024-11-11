@@ -7,6 +7,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+/**<p> Exception Handler for {@link AuthenticationException} and other exceptions that occur in Auth Service</p>
+ */
 @ControllerAdvice
 @Component
 @Slf4j

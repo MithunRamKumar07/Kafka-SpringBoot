@@ -5,6 +5,13 @@ Services :
 3. Timeline Service - Specific to an customerEvent
 
 
+
+For new datatype : 
+we can use multiple datasource concept.  - Check if this is valid
+We can use No SQL DB to store multimedia content. Or store the media as blob
+
 For 3000000 records,
- - we need to increase the partitions. 
+ - we need to increase the clusters. "Cluster scaling" The clusters will grow . SBC (self balancing clusters)
+ 
+ https://www.youtube.com/watch?v=Q7tU0B1bnSE&t=1759s watch this link  
  - Can you use the consumer group concept (Consumer Rebalancing)

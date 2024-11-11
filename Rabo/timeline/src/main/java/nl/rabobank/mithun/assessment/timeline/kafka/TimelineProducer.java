@@ -9,6 +9,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.concurrent.CompletableFuture;
 
+/**<p> Kafka Producer to publish the events to Auth Service. Publishes to the below topics</p>
+ *  <li>TIMELINE</li>
+ */
 @Slf4j
 @Service
 public class TimelineProducer {

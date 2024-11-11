@@ -12,6 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+/**<p> Service that has all the business logic for the Timeline service.
+ * Coordinates the flow of events between the controller, repository and Kafka Modules</p>
+ */
 @Slf4j
 @Service
 public class TimelineService {

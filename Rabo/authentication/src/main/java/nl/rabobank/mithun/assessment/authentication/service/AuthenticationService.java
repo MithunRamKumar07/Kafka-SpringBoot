@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import nl.rabobank.mithun.assessment.authentication.exception.AuthenticationException;
 
+/**<p> Service that has all the business logic for the Auth service. Coordinates the flow of events between the controller, repository and Kafka Modules</p>
+ */
 @Slf4j
 @Service
 public class AuthenticationService {

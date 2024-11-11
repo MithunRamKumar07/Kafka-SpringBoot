@@ -11,9 +11,12 @@ import org.springframework.kafka.annotation.DltHandler;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.annotation.RetryableTopic;
 import org.springframework.stereotype.Service;
-
 import javax.naming.AuthenticationException;
 
+/**<p> Kafka Consumer to consume the events from the Customer and Timeline Services. Listens to the below topics</p>
+ *  <li>TIMELINE</li>
+ *  <li>CUSTOMER</li>
+ */
 @Slf4j
 @Service
 public class AuthenticationConsumer {

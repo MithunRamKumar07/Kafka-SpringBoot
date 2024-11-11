@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**<p> Controller class to handle the CRUD operations for the customer.</p>
+ */
 @RestController
 @RequestMapping(value = "/customer")
 public class CustomerController {

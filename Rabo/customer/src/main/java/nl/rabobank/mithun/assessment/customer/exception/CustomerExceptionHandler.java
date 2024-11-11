@@ -6,7 +6,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-
+/**<p> Exception Handler for {@link CustomerException} and other exceptions that occur in Customer Service</p>
+ */
 @ControllerAdvice
 @Component
 @Slf4j

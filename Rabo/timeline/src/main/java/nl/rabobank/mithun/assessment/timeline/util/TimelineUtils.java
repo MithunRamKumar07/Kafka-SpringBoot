@@ -5,7 +5,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import nl.rabobank.mithun.assessment.timeline.exception.TimelineException;
 import nl.rabobank.mithun.assessment.timeline.model.TimelineEvent;
-
+/**<p> Util class to handle the common logic across the timeline module.
+ */
 @Slf4j
 public class TimelineUtils {
 

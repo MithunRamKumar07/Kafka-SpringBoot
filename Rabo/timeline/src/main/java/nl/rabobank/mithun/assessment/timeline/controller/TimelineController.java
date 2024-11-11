@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+/**<p> Controller class to post messages to the timeline service</p>
+ */
 @RestController
 @RequestMapping(value = "/timeline")
 public class TimelineController {

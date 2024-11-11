@@ -12,6 +12,9 @@ import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.annotation.RetryableTopic;
 import org.springframework.stereotype.Service;
 
+/**<p> Kafka Consumer to consume the events from the Customer. Listens to the below topics</p>
+ *  <li>CUSTOMER</li>
+ */
 @Slf4j
 @Service
 public class TimelineConsumer {
