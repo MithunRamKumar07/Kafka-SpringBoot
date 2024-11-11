@@ -71,19 +71,25 @@ Below are the test case details :
 
 Answers for Part 2 and Part 3 are below 
 
-### Part 2 
-
-* ****
-
-### Part 3
+### Part 3 - How to handle increase in volume of data
 
 As per the kafka architecture, the partition is where the actual event data are stored. A topic will have several partitions.
 The default number of partitions per topic is 3 and can be configured/altered using a Java config file.
 
 In-case there is a sudden surge in events(when the threshold for partitions is reached), the partition size needs to be increased. For Apache kafka,this is taken care by the zookeeper. 
 The increase in partitions in leader broker means that the follower brokers(where event data is replicated) will also have to scale up their partition count.
+
 Based on the flavour of Kafka(Apache/Confluent) used, the logic of auto-scaling of partitions  might differ.
 This way, the consumers would not feel the latency , even when there are more events.
 
+* ****
+
+### Part 2 - How to enrich messages
+
+Below are my "thoughts" for the question.
+Per my research about embed.ly, I found that it helps us to embed media from another source (like a youtube video) in our webpage without having to redirect to the actual source.
+Keeping that in mind, our solution would be to add a field in our POJO , that would have the links of the media content from our webservers. This will be rendered it on our front end web page. 
+To render those content, we might use Kafka streams.
+Regarding the storage of the media content, NoSQL databases can be used.
 * ****
   
