@@ -1,1 +1,1 @@
-Please refer the readme file inside the Rabo directory
+Please refer the readme file inside the Kafka directory
