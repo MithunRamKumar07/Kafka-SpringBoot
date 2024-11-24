@@ -1,0 +1,6 @@
+nl/rabobank/mithun/assessment/customer/service/CustomerServiceTest.class
+nl/rabobank/mithun/assessment/customer/CustomerApplicationTests.class
+nl/rabobank/mithun/assessment/customer/exception/CustomerExceptionHandlerTest.class
+TestRunner.class
+nl/rabobank/mithun/assessment/customer/controller/CustomerControllerTest.class
+nl/rabobank/mithun/assessment/customer/kafka/CustomerMessageProducerTest.class

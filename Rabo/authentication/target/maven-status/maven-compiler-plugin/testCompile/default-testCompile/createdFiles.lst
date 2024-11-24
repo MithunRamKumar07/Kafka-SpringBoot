@@ -1,0 +1,6 @@
+nl/rabobank/mithun/assessment/authentication/AuthenticationApplicationTests.class
+nl/rabobank/mithun/assessment/authentication/exception/AuthenticationExceptionHandlerTest.class
+nl/rabobank/mithun/assessment/authentication/kafka/AuthenticationConsumerTest.class
+nl/rabobank/mithun/assessment/authentication/service/AuthenticationServiceTest.class
+nl/rabobank/mithun/assessment/authentication/TestUtils.class
+nl/rabobank/mithun/assessment/authentication/kafka/AuthenticationProducerTest.class

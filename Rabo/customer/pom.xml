@@ -8,11 +8,11 @@
 		<version>3.3.5</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>nl.rabobank.mithun.assessment</groupId>
+	<groupId>kafka.example.customer</groupId>
 	<artifactId>customerEvent</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>assessment</name>
-	<description>Rabobank Assessment for Mithun</description>
+	<description>Springboot Kafka Example</description>
 	<url/>
 	<licenses>
 		<license/>

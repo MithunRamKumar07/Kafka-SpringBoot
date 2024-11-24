@@ -1,0 +1,11 @@
+nl/rabobank/mithun/assessment/customer/repository/CustomerRepository.class
+nl/rabobank/mithun/assessment/customer/CustomerApplication.class
+nl/rabobank/mithun/assessment/customer/exception/ErrorResponse.class
+nl/rabobank/mithun/assessment/customer/controller/CustomerController.class
+nl/rabobank/mithun/assessment/customer/exception/CustomerExceptionHandler.class
+nl/rabobank/mithun/assessment/customer/model/Status.class
+nl/rabobank/mithun/assessment/customer/exception/CustomerException.class
+nl/rabobank/mithun/assessment/customer/kafka/CustomerMessageProducer.class
+nl/rabobank/mithun/assessment/customer/security/SecurityFilter.class
+nl/rabobank/mithun/assessment/customer/model/Customer.class
+nl/rabobank/mithun/assessment/customer/service/CustomerService.class

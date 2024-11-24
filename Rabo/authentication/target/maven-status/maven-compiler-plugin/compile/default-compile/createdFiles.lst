@@ -1,0 +1,14 @@
+nl/rabobank/mithun/assessment/authentication/model/Timeline.class
+nl/rabobank/mithun/assessment/authentication/model/TimelineEvent.class
+nl/rabobank/mithun/assessment/authentication/exception/AuthenticationExceptionHandler.class
+nl/rabobank/mithun/assessment/authentication/model/CustomerEvent.class
+nl/rabobank/mithun/assessment/authentication/repository/AuthenticationRepository.class
+nl/rabobank/mithun/assessment/authentication/model/Message.class
+nl/rabobank/mithun/assessment/authentication/model/Status.class
+nl/rabobank/mithun/assessment/authentication/model/Membership.class
+nl/rabobank/mithun/assessment/authentication/exception/AuthenticationException.class
+nl/rabobank/mithun/assessment/authentication/AuthenticationApplication.class
+nl/rabobank/mithun/assessment/authentication/service/AuthenticationService.class
+nl/rabobank/mithun/assessment/authentication/kafka/AuthenticationProducer.class
+nl/rabobank/mithun/assessment/authentication/exception/ErrorResponse.class
+nl/rabobank/mithun/assessment/authentication/kafka/AuthenticationConsumer.class

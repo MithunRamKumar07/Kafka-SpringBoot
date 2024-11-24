@@ -1,0 +1,15 @@
+nl/rabobank/mithun/assessment/timeline/kafka/TimelineProducer.class
+nl/rabobank/mithun/assessment/timeline/model/Timeline.class
+nl/rabobank/mithun/assessment/timeline/service/TimelineService.class
+nl/rabobank/mithun/assessment/timeline/model/TimelineEvent.class
+nl/rabobank/mithun/assessment/timeline/security/SecurityFilter.class
+nl/rabobank/mithun/assessment/timeline/repository/MessageRepository.class
+nl/rabobank/mithun/assessment/timeline/exception/TimelineExceptionHandler.class
+nl/rabobank/mithun/assessment/timeline/controller/TimelineController.class
+nl/rabobank/mithun/assessment/timeline/repository/TimelineRepository.class
+nl/rabobank/mithun/assessment/timeline/util/TimelineUtils.class
+nl/rabobank/mithun/assessment/timeline/exception/TimelineException.class
+nl/rabobank/mithun/assessment/timeline/model/Message.class
+nl/rabobank/mithun/assessment/timeline/TimelineApplication.class
+nl/rabobank/mithun/assessment/timeline/kafka/TimelineConsumer.class
+nl/rabobank/mithun/assessment/timeline/exception/ErrorResponse.class
